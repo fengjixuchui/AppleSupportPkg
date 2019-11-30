@@ -132,8 +132,7 @@ StartApfsDriver (
   DEBUG ((DEBUG_VERBOSE, "Verifying binary signature\n"));
   Status = VerifyApplePeImageSignature (
     EfiFileBuffer,
-    &EfiFileSize,
-    NULL
+    &EfiFileSize
     );
 
   DEBUG ((DEBUG_VERBOSE, "New ImageSize after verification: %lu\n", EfiFileSize));
@@ -1029,13 +1028,12 @@ ApfsDriverLoaderStart (
                       );
   }
 
-  FreePool (ApfsBlock);
-
   //
   // Fill public AppleFileSystemEfiBootRecordInfo protocol interface
   //
   Private = AllocatePool (sizeof (APFS_DRIVER_INFO_PRIVATE_DATA));
   if (Private == NULL) {
+    FreePool (ApfsBlock);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1063,6 +1061,8 @@ ApfsDriverLoaderStart (
     if (Private != NULL) {
       FreePool (Private);
     }
+    FreePool (ApfsBlock);
+
     return Status;
   }
 
@@ -1071,6 +1071,8 @@ ApfsDriverLoaderStart (
     EfiFileBuffer,
     EfiBootRecordBlock->EfiFileLen
     );
+
+  FreePool (ApfsBlock);
 
   if (EFI_ERROR (Status)) {
     gBS->UninstallProtocolInterface (

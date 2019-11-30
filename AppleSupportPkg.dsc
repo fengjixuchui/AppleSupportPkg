@@ -52,18 +52,21 @@
   IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
   OcAppleImageVerificationLib|OcSupportPkg/Library/OcAppleImageVerificationLib/OcAppleImageVerificationLib.inf
   OcAppleKeysLib|OcSupportPkg/Library/OcAppleKeysLib/OcAppleKeysLib.inf
+  OcAppleKeyMapLib|OcSupportPkg/Library/OcAppleKeyMapLib/OcAppleKeyMapLib.inf
+  OcConsoleControlEntryModeLib|OcSupportPkg/Library/OcConsoleControlEntryModeLib/OcConsoleControlEntryModeLib.inf
+  OcCpuLib|OcSupportPkg/Library/OcCpuLib/OcCpuLib.inf
   OcCryptoLib|OcSupportPkg/Library/OcCryptoLib/OcCryptoLib.inf
   OcFileLib|OcSupportPkg/Library/OcFileLib/OcFileLib.inf
   OcGuardLib|OcSupportPkg/Library/OcGuardLib/OcGuardLib.inf
   OcPngLib|OcSupportPkg/Library/OcPngLib/OcPngLib.inf
   OcRtcLib|OcSupportPkg/Library/OcRtcLib/OcRtcLib.inf
-  AppleEventLib|AppleSupportPkg/Library/AppleEventLib/AppleEventLib.inf
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
   DxeServicesLib|MdePkg/Library/DxeServicesLib/DxeServicesLib.inf
   PeCoffLib|MdePkg/Library/BasePeCoffLib/BasePeCoffLib.inf
   PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
   PeCoffExtraActionLib|MdePkg/Library/BasePeCoffExtraActionLibNull/BasePeCoffExtraActionLibNull.inf
   OcTimerLib|OcSupportPkg/Library/OcTimerLib/OcTimerLib.inf
+  OcMemoryLib|OcSupportPkg/Library/OcMemoryLib/OcMemoryLib.inf
   OcMiscLib|OcSupportPkg/Library/OcMiscLib/OcMiscLib.inf
   OcAppleBootPolicyLib|OcSupportPkg/Library/OcAppleBootPolicyLib/OcAppleBootPolicyLib.inf
   OcAppleChunklistLib|OcSupportPkg/Library/OcAppleChunklistLib/OcAppleChunklistLib.inf
@@ -80,10 +83,11 @@
   PlatformHookLib|MdeModulePkg/Library/BasePlatformHookLibNull/BasePlatformHookLibNull.inf
 
 [Components]
+  AppleSupportPkg/Application/VerifyMsrE2/VerifyMsrE2.inf
   AppleSupportPkg/Platform/AppleImageLoader/AppleImageLoader.inf
-  AppleSupportPkg/Platform/AppleUiSupport/AppleUiSupport.inf
   AppleSupportPkg/Platform/ApfsDriverLoader/ApfsDriverLoader.inf
   AppleSupportPkg/Platform/AppleUsbKbDxe/UsbKbDxe.inf
+  AppleSupportPkg/Platform/FwRuntimeServices/FwRuntimeServices.inf
   AppleSupportPkg/Platform/VirtualSmc/VirtualSmc.inf
   AppleSupportPkg/Platform/VBoxHfs/VBoxHfs.inf
 
@@ -107,12 +111,12 @@
   # While there are no PCDs as of now, there at least are some custom macros.
   DEFINE APPLESUPPORTPKG_BUILD_OPTIONS_GEN = -D DISABLE_NEW_DEPRECATED_INTERFACES $(APPLESUPPORTPKG_BUILD_OPTIONS)
 
-  GCC:DEBUG_*_*_CC_FLAGS     = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  GCC:NOOPT_*_*_CC_FLAGS     = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  GCC:RELEASE_*_*_CC_FLAGS   = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  MSFT:DEBUG_*_*_CC_FLAGS    = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  MSFT:NOOPT_*_*_CC_FLAGS    = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  MSFT:RELEASE_*_*_CC_FLAGS  = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  XCODE:DEBUG_*_*_CC_FLAGS   = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  XCODE:NOOPT_*_*_CC_FLAGS   = $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
-  XCODE:RELEASE_*_*_CC_FLAGS = -Oz -flto $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  GCC:DEBUG_*_*_CC_FLAGS     = -D OC_TARGET_DEBUG=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  GCC:NOOPT_*_*_CC_FLAGS     = -D OC_TARGET_NOOPT=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  GCC:RELEASE_*_*_CC_FLAGS   = -D OC_TARGET_RELEASE=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  MSFT:DEBUG_*_*_CC_FLAGS    = -D OC_TARGET_DEBUG=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  MSFT:NOOPT_*_*_CC_FLAGS    = -D OC_TARGET_NOOPT=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  MSFT:RELEASE_*_*_CC_FLAGS  = -D OC_TARGET_RELEASE=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  XCODE:DEBUG_*_*_CC_FLAGS   = -D OC_TARGET_DEBUG=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  XCODE:NOOPT_*_*_CC_FLAGS   = -D OC_TARGET_NOOPT=1 $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)
+  XCODE:RELEASE_*_*_CC_FLAGS = -D OC_TARGET_RELEASE=1 -Oz -flto $(APPLESUPPORTPKG_BUILD_OPTIONS_GEN)

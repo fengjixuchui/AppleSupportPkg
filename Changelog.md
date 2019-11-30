@@ -1,5 +1,29 @@
 AppleSupport Changelog
 ======================
+#### v2.1.4
+- Added workaround for V to NV variable upgrade in FwRuntimeServices
+- Added support for RequestBootVarFallback in FwRuntimeServices
+
+#### v2.1.3
+- Added VerifyMsrE2 boot screen compatibility
+
+#### v2.1.2
+- Fixed enabling RO/WO variables before OS start
+- Fixed extra delay during FwRuntimeServices startup
+
+#### v2.1.1
+- Moved AppleGenericInput into OpenCore mainline
+
+#### v2.1.0
+- Moved AppleUiSupport into OpenCore mainline
+- Moved CleanNvram into OpenCore mainline
+
+#### v2.0.9
+- Fixed memory corruption on select platforms (by @mjg59)
+- Added AppleGenericInput (formerly AptioInputFix)
+- Added CleanNvram and VerifyMsrE2 tools
+- Added FwRuntimeServices OpenCore runtime compatibility layer
+- Incrased VerifyMsrE2 timeout to 5s for more cores (by @mrmiller)
 
 #### v2.0.8
 - Respect OpenCore scan policy during apfs driver loading
